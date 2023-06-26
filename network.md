@@ -1674,4 +1674,6 @@ OSPF路由器的角色：
 - AS边界路由器AS Boundary Router
 
 
+## BGP 协议
 
+https://blog.csdn.net/keith6785753/article/details/107088632?spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-107088632-blog-115476061.235%5Ev31%5Epc_relevant_default_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-107088632-blog-115476061.235%5Ev31%5Epc_relevant_default_base&utm_relevant_index=17

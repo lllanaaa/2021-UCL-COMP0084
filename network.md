@@ -1677,3 +1677,88 @@ OSPF路由器的角色：
 ## BGP 协议
 
 https://blog.csdn.net/keith6785753/article/details/107088632?spm=1001.2101.3001.6650.12&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-107088632-blog-115476061.235%5Ev31%5Epc_relevant_default_base&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7ERate-12-107088632-blog-115476061.235%5Ev31%5Epc_relevant_default_base&utm_relevant_index=17
+
+
+## VPN
+
+
+## Overlay / Underlay
+
+
+- Underlay
+  - Underlay 网络是由各类物理设备构成，通过使用路由协议保证其设备之间的IP连通性的承载网络
+  - 可以理解为**物理网络**
+- Overlay
+  - Overlay 网络是通过网络虚拟化技术，在同一张Underlay网络上构建出的一张或者多张虚拟的逻辑网络
+  - 不同的Overlay网络虽然共享Underlay网络中的设备和线路，但是Overlay网络中的业务与Underlay网络中的物理组网和互联技术相互解耦
+  - 可以理解为**逻辑网络**
+
+
+
+### Underlay
+
+- Underlay 网络是负责传递数据包的物理网络
+- 在 Underlay 网络中，互联的设备可以是各类型交换机、路由器、负载均衡设备、防火墙等
+- 网络的各个设备之间必须通过路由协议来确保之间 IP 的连通性
+- Underlay 协议：
+  - BGP
+  - OSPF
+  - IS-IS
+  - EIGRP
+
+- Underlay网络可以是二层也可以是三层网络
+  - 二层网络通常应用于以太网，通过VLAN进行划分
+  - 三层网络的典型应用就是互联网
+    - 其在同一个自治域使用OSPF、IS-IS等协议进行路由控制，在各个自治域之间则采用BGP等协议进行路由传递与互联
+  - 随着技术的进步，也出现了使用MPLS这种介于二三层的WAN技术搭建的Underlay网络
+- 产生了问题：
+  - 由于硬件根据目的IP地址进行数据包的转发，所以传输的路径依赖十分严重
+  - 新增或变更业务需要对现有底层网络连接进行修改，重新配置耗时严重
+  - 互联网不能保证私密通信的安全要求
+  - 网络切片和网络分段实现复杂，无法做到网络资源的按需分配
+  - 多路径转发繁琐，无法融合多个底层网络来实现负载均衡
+
+
+
+
+
+### Overlay
+
+
+- Overlay 是使用网络虚拟化在物理基础设施之上建立连接的逻辑网络
+- 相互连接的Overlay设备之间建立隧道，数据包准备传输出去时，设备为数据包添加新的IP头部和隧道头部，并且被屏蔽掉内层的IP头部，数据包根据新的IP头部进行转发。当数据包传递到另一个设备后，外部的IP报头和隧道头将被丢弃，得到原始的数据包，在这个过程中Overlay网络并不感知Underlay网络
+- Overlay 协议：
+  - VXLAN
+  - NVGRE
+  - GRE
+  - OTV
+  - OMP
+  - mVPN
+- Overlay网络使用隧道技术，可以灵活选择不同的底层链路，使用多种方式保证流量的稳定传输
+  - Overlay网络可以按照需求建立不同的虚拟拓扑组网，无需对底层网络作出修改
+  - 通过加密手段可以解决保护私密流量在互联网上的通信
+  - 支持网络切片与网络分段。将不同的业务分割开来，可以实现网络资源的最优分配
+  - 支持多路径转发。在Overlay网络中，流量从源传输到目的可通过多条路径，从而实现负载分担，最大化利用线路的带宽
+
+
+应用：
+
+- 数据中心的Overlay网络
+  - ![2023-04-21-19-31-57](%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.assets/2023-04-21-19-31-57.png)
+- SD-WAN中的Overlay网络
+  - SD-WAN的Underlay网络基于广域网，通过混合链路的方式达成总部站点、分支站点、云网站点之间的互联
+  - ![2023-04-21-19-40-14](%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.assets/2023-04-21-19-40-14.png)
+  - SD-WAN 的网络主要由 CPE 设备构成，其中 CPE 又分为 Edge 和 GW 两种类型
+    - CPE：Customer-Premises Equipment 客户场所设备，指用于访问 Internet 或通常访问提供商网络上的服务的任何连接设备
+    - Edge：是 SD-WAN 站点的出口设备
+    - GW：是联接 SD-WAN 站点和其他网络（如传统VPN）的网关设备
+
+
+## NTP
+
+
+
+## ACL
+
+
+
